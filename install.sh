@@ -77,9 +77,9 @@ git clone https://github.com/gucheng6/SWEB
 chmod +x /usr/local/SWEB/cgi-bin
 
 #Configure Caddy Proxy
-echo ":80 {
+echo ":1888 {
  basicauth / $webuser $webpasswd
- proxy / http://127.0.0.1:8000
+ proxy / http://127.0.0.1:1888
 }" > /usr/local/caddy/Caddyfile
 service caddy restart
 
@@ -92,8 +92,8 @@ cd /usr/local/SWEB
 screen -dmS SWEB python CGIHTTPServer.py
 
 #Setup iptables rules
-iptables -I INPUT -p tcp --dport 8000 -j DROP
-iptables -I INPUT -s 127.0.0.1 -p tcp --dport 8000 -j ACCEPT
+iptables -I INPUT -p tcp --dport 1888 -j DROP
+iptables -I INPUT -s 127.0.0.1 -p tcp --dport 1888 -j ACCEPT
 
 #Install OK
 echo "Install Finished!"
